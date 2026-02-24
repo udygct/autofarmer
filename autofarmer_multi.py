@@ -25,7 +25,7 @@ black_list_ids:list[str] = []
 no_action_ids:list[str] = []
 expel_inactive_members_time:int = 600
 expel_inactive_members:bool = False
-refresh_time:int = 30
+refresh_time:int = 120
 rf_path:Path = os.path.dirname(os.path.abspath(__file__))
 number_of_union_members:int = 0
 player_id:str|None = None
@@ -122,7 +122,6 @@ def on_frame_received(requestId, timestamp, response: dict) -> None:
     if "union_applicants" in response_data and "union:" in response_data:
         if "name" in response_data:
             applicants = json.loads(response_data)[4]["response"]["union_applicants"]
-            refresh_time = max((60 / (1 + len(applicants))), 15)
 
     # Passive check for union applicants
     if "\"update_data\",{\"union_applicants" in response_data:
@@ -189,7 +188,7 @@ def on_frame_received(requestId, timestamp, response: dict) -> None:
                     continue
         else:
             print("(Union ID not detected)")
-        time.sleep(0.5)
+        time.sleep(10)
 
 # Handle WebSocket creation, inject hook
 def on_websocket_created(requestId, url, initiator) -> None:
