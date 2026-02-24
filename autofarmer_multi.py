@@ -166,6 +166,8 @@ def on_frame_received(requestId, timestamp, response: dict) -> None:
         if str(applicant["id"]) in no_action_ids:
             continue
 
+        time.sleep(5)
+
         print(f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')} [*] Applicant : {format_name(applicant["name"])} id: {applicant["id"]} ", end=" ")
         if union_id:
             status, return_status = check_applicant(applicant["id"])
@@ -188,7 +190,7 @@ def on_frame_received(requestId, timestamp, response: dict) -> None:
                     continue
         else:
             print("(Union ID not detected)")
-        time.sleep(10)
+        
 
 # Handle WebSocket creation, inject hook
 def on_websocket_created(requestId, url, initiator) -> None:
